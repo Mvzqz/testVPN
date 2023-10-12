@@ -23,7 +23,7 @@ jobs:
     - name: install nordvpn
       run:  echo 'Y' | sh ./install.sh 
     - name: give permisions to nordvpn
-      run:  sudo chmod 777 /run/nordvpn/nordvpn.sock
+      run:  sudo chmod 777 /run/nordvpn/nordvpnd.sock
     - name: login nordvpn
       run:  nordvpn login pon.tu.correo.aca@gmail.com vinicius&toquinho123
     - name: conect nordvpn
