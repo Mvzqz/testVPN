@@ -18,8 +18,10 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
+    - name: download nordvpn
+      run: curl -O https://downloads.nordcdn.com/apps/linux/install.sh 
     - name: install nordvpn
-      run: curl -O https://downloads.nordcdn.com/apps/linux/install.sh | echo 'Y' | sh ./install.sh 
+      run:  echo 'Y' | sh ./install.sh 
     - name: login nordvpn
       run:  nordvpn login pon.tu.correo.aca@gmail.com vinicius&toquinho123
     - name: conect nordvpn
