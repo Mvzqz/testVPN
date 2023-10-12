@@ -25,7 +25,7 @@ jobs:
     - name: give permisions to nordvpn
       run:  sudo chmod 777 /run/nordvpn/nordvpnd.sock
     - name: login nordvpn
-      run:  nordvpn login pon.tu.correo.aca@gmail.com vinicius&toquinho123
+      run:  nordvpn login
     - name: conect nordvpn
       run:  nordvpn connect   
     - name: Checkout
