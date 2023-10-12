@@ -2,5 +2,12 @@ import { defineConfig } from "@playwright/test";
 
 
 export default defineConfig({
-    testDir:'./tests'
+    testDir:'./tests',
+    reporter:[
+        ['list'],
+        ['html'],
+    ],
+    use:{
+        trace:'on'
+    }
 })
