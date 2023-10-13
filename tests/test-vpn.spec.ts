@@ -1,7 +1,7 @@
 import {test, expect,} from '@playwright/test'
 
 test('test vpn', async({ page }) => {
-
+    test.slow()
     await page.goto('https://www.whatismyip.com')
 
     const ipElements = await page.locator('.ip-info-line').all()
