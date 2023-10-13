@@ -22,7 +22,7 @@ jobs:
     - name: download proton vpn repo
       run: curl -O https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3_all.deb
     - name: install proton vpn repo
-      run:  sudo apt-get install protonvpn-beta-release_1.0.3_all.deb
+      run:  sudo apt-get install ./protonvpn-beta-release_1.0.3_all.deb
     - name: update aptget
       run:  sudo apt-get update
     - name: install proton vpn
