@@ -29,10 +29,12 @@ jobs:
       run: npm ci
     - name: Install playwright Browsers
       run: npx playwright install --with-deps
-    - name: install open vpn 
-      run:  sudo apt-get install openvpn unzip
-    - name: Run openvpn 
-      run: sudo openvpn --config "./node-jp-25.protonvpn.net.udp.ovpn"
+    - name: Install open vpn 
+      run: |
+          sudo apt-get update
+          sudo apt-get --assume-yes --no-install-recommends install openvpn      
+    - name: Connect openvpn 
+      run: sudo openvpn --config "./node-jp-25.protonvpn.net.udp.ovpn" --log "vpn.log" --daemon 
     - name: Run playwright test
       run: npx playwright test
     - uses: actions/upload-artifact@v3
