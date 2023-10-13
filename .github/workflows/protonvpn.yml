@@ -26,9 +26,9 @@ jobs:
     - name: update aptget
       run:  sudo apt-get update
     - name: install proton vpn
-      run:  sudo apt-get install protonvpn-cli pon.tu.correo.aca@gmail.com
+      run:  sudo apt-get install protonvpn-cli 
     - name: login to proton vpn
-      run:  protonvpn-cli login  
+      run:  protonvpn-cli login pon.tu.correo.aca@gmail.com
     - name: Checkout
       uses: actions/checkout@v3
     - name: Setup node
