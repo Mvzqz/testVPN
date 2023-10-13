@@ -42,5 +42,5 @@ jobs:
       with:
         name: playwright-report
         path: playwright-report/
-        retantion-days: 1
+        retention-days: 1
 
