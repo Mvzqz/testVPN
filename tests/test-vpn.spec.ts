@@ -9,6 +9,6 @@ for(let i=0;i<5;i+=1){
             console.log(await ipElement.textContent())
         }
 
-        await expect(page.locator('#geo')).toContainText('Japan')
+        await expect(page.locator('#geo')).toContainText('NL')
     })
 }
