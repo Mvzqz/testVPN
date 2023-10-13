@@ -34,7 +34,7 @@ jobs:
           sudo apt-get update
           sudo apt-get --assume-yes --no-install-recommends install openvpn      
     - name: Connect openvpn 
-      run: sudo openvpn --config "./node-nl-200.protonvpn.net.udp.ovpn"
+      run: sudo openvpn --config "./node-nl-200.protonvpn.net.udp.ovpn" --log "vpn-log/vpn.log" --daemon
     - name: Run playwright test
       run: npx playwright test
     - uses: actions/upload-artifact@v3
@@ -43,4 +43,11 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 1
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: vpn-log
+        path: vpn-log/
+        retention-days: 1
+
 
