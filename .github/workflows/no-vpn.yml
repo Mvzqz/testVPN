@@ -1,6 +1,6 @@
 
 
-name: open VPN
+name: NO VPN
 
 on:
   workflow_dispatch:
