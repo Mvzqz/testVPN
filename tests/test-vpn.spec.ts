@@ -9,5 +9,5 @@ test('test vpn', async({ page }) => {
         console.log(await ipElement.textContent())
     }
 
-    await expect(page.locator('#geo')).toContainText('Guadalajara, JAL MX')
+    await expect(page.locator('#geo')).toContainText('Japan')
 })
