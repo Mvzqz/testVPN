@@ -34,7 +34,7 @@ jobs:
           sudo apt-get update
           sudo apt-get --assume-yes --no-install-recommends install openvpn      
     - name: Connect openvpn 
-      run: sudo openvpn --config "./node-jp-25.protonvpn.net.udp.ovpn"
+      run: sudo openvpn --config "./node-nl-200.protonvpn.net.udp.ovpn"
     - name: Run playwright test
       run: npx playwright test
     - uses: actions/upload-artifact@v3
