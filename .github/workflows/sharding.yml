@@ -6,19 +6,20 @@ name: Sharding
 on:
   workflow_dispatch:
     inputs:
-      test:
-        description: 'this a test'
-        required: true
-        default: 'TEST'
-        type: choice
-        options:
-        - 'TEST'
-        - 'TEST2'
+      useSharding:
+        description: 'Run with sharding'
+        required: false
+        default: 'true'
+        type: boolean
 jobs:
   test:
     strategy:
-      matrix:
-        shard: ['1/2','2/2']
+      if: ${{ inputs.useSharding }}
+        matrix:
+          shard: ['1/2','2/2']
+      if: ${{ inputs.useSharding == 'false' }}
+        matrix:
+          shard: ['1/1']
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
