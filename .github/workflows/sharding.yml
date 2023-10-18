@@ -14,13 +14,11 @@ on:
         options:
         - 'TEST'
         - 'TEST2'
-
 jobs:
-  sharding:
-  strategy:
-    matrix:
-    shard: ['1/2','2/2']
   test:
+    strategy:
+      matrix:
+        shard: ['1/2','2/2']
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
