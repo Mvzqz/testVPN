@@ -16,7 +16,7 @@ jobs:
     strategy:
       if: 
         matrix:
-          shard: ${{ inputs.useSharding == 'true'? ['1/2','2/2'] : ['1/1'] }} 
+          shard: ${{ inputs.useSharding == 'true' ? ['1/2','2/2'] : ['1/1'] }} 
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
