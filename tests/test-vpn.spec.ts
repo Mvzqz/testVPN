@@ -9,7 +9,7 @@ for(let i=0;i<5;i+=1){
             console.log(await ipElement.textContent())
         }
 
-        await expect(page.locator('#geo')).toContainText('NL')
+        await expect(page.locator('#geo')).toContainText('US')
     })
 }
 
@@ -23,7 +23,7 @@ for(let i=0;i<5;i+=1){
             console.log(await ipElement.textContent())
         }
 
-        await expect(page.locator('#geo')).toContainText('NL')
+        await expect(page.locator('#geo')).toContainText('US')
     })
 }
 
