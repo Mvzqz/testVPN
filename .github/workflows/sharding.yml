@@ -71,9 +71,6 @@ jobs:
     - name: Merge into HTML report
       run: npx playwright merge-reports --reporter html ./all-blob-reports
 
-    - name: Merge into XML report
-      run: npx playwright merge-reports --reporter junit ./all-blob-reports
-
     - name: Upload HTML Report
       uses: actions/upload-artifact@v3
       with:
@@ -81,11 +78,14 @@ jobs:
         path: playwright-report
         retention-days: 1
     
+    - name: Merge into XML report
+      run: PLAYWRIGHT_JUNIT_OUTPUT_NAME='playwright-junit-report/results.xml' npx playwright merge-reports --reporter junit ./all-blob-reports
+
     - name: Upload JUnit Report
       uses: actions/upload-artifact@v3
       with:
         name: junit-report-${{ github.run_attempt }}
-        path: playwright-report-junit
+        path: playwright-junit-report
         retention-days: 1
 
     - name: Setup Pages
