@@ -43,5 +43,33 @@ jobs:
         name: vpn-log
         path: vpn-log/
         retention-days: 1
+  reports:
+    if: always()
+    needs: [test]
 
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - name: Install dependencies
+      run: npm ci
 
+    - name: Download blob reports from Github actions 
+      uses: actions/download-artifact@v3
+      with:
+        name: playwright-report
+        path: playwright-report
+
+    - name: Merge into HTML report
+      run: npx playwright merge-reports --reporter html ./playwright-report
+
+    - name: Upload HTML Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: html-report-${{ github.run_attempt }}
+        path: playwright-report
+        retention-days: 1
