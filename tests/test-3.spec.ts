@@ -1,5 +1,5 @@
 import {test, expect,} from '@playwright/test'
-    test(`test vpn2`, async({ page }) => {
+    test(`test vpn3`, async({ page }) => {
         test.slow()
         await page.goto('https://www.whatismyip.com')
 
