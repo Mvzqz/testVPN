@@ -15,7 +15,7 @@ jobs:
   test:
     strategy:
       matrix:
-        shard: ${{ fromJSON( '{ "false":["1/1"], "true":["1/2","2/2"] }')[inputs.useSharding] }}
+        shard: ${{ fromJSON( '{ "false":["1/1"], "true":["1/3","2/3","3/3"] }')[inputs.useSharding] }}
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
