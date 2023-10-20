@@ -44,6 +44,10 @@ jobs:
         path: vpn-log/
         retention-days: 1
   reports:
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     needs: [test]
     uses: ./.github/workflows/reporting.yml
     with:
