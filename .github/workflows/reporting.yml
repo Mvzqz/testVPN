@@ -1,25 +1,28 @@
 
 
 
-name: Sharding
+name: Reporting
 
 on:
   workflow_dispatch:
     inputs:
       test:
         description: 'this a test'
-        required: true
+        required: false
         default: 'TEST'
         type: choice
         options:
         - 'TEST'
         - 'TEST2'
 jobs:
-  test:
-    strategy:
-      matrix:
-        shard: ['1/2','2/2']
+  reports:
+    if: always()
+    needs: [test]
     timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -30,21 +33,44 @@ jobs:
         node-version: 18
     - name: Install dependencies
       run: npm ci
-    - name: Install playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run playwright test
-      run: npx playwright test --shard=${{ matrix.shard }}
-    - uses: actions/upload-artifact@v3
+
+    - name: Download blob reports from Github actions 
+      uses: actions/download-artifact@v3
+      with:
+        name: all-blob-reports
+        path: all-blob-reports
+
+    - name: Merge into HTML report
+      run: npx playwright merge-reports --reporter html ./all-blob-reports
+
+    - name: Upload HTML Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: html-report-${{ github.run_attempt }}
+        path: playwright-report
+        retention-days: 1
+    
+    - name: Merge into XML report
+      run: PLAYWRIGHT_JUNIT_OUTPUT_NAME='playwright-junit-report/results.xml' npx playwright merge-reports --reporter junit ./all-blob-reports
+
+    - name: Upload JUnit Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: junit-report-${{ github.run_attempt }}
+        path: playwright-junit-report
+        retention-days: 1
+
+    - name: Setup Pages
+      if: always()
+      uses: actions/configure-pages@v3
+    
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v2
       if: always()
       with:
-        name: playwright-report
         path: playwright-report/
-        retention-days: 1
-    - uses: actions/upload-artifact@v3
+    
+    - name: Deploy to GitHub Pages
+      id: deployment
       if: always()
-      with:
-        name: vpn-log
-        path: vpn-log/
-        retention-days: 1
-
-
+      uses: actions/deploy-pages@v2
