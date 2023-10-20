@@ -25,6 +25,9 @@ jobs:
     - name: Print Type
       run: echo ${{ inputs.test }}
 
+    - name: Print test
+      run: echo "Test"
+
     - name: Checkout
       uses: actions/checkout@v3
     - name: Setup node
