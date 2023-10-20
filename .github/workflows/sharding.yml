@@ -9,7 +9,7 @@ on:
       useSharding:
         description: 'Run with sharding'
         required: false
-        default: 'true'
+        default: true
         type: boolean
 jobs:
   test:
@@ -47,4 +47,4 @@ jobs:
     needs: [test]
     uses: ./.github/workflows/reporting.yml
     with:
-      test:
+      test: 'this is a test'
