@@ -47,4 +47,4 @@ jobs:
     if: always()
     needs: [test]
     timeout-minutes: 10
-    uses: ./github/workflows/reporting.yml
+    uses: ./.github/workflows/reporting.yml
