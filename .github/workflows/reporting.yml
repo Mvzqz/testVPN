@@ -23,7 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Print Type
-      run: echo ${{ github.event.inputs.test }}
+      run: echo ${{ inputs.test }}
+
     - name: Checkout
       uses: actions/checkout@v3
     - name: Setup node
