@@ -47,4 +47,5 @@ jobs:
     if: always()
     needs: [test]
     timeout-minutes: 10
+    runs-on: ubuntu-latest
     uses: ./.github/workflows/reporting.yml
