@@ -10,14 +10,11 @@ on:
         description: 'this a test'
         required: false
         default: 'TEST'
-        type: choice
-        options:
-        - 'TEST'
-        - 'TEST2'
+        type: string
+        
 jobs:
   reports:
     if: always()
-    needs: [test]
     timeout-minutes: 10
     permissions:
       contents: read
@@ -25,6 +22,8 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     steps:
+    - name: Print Type
+      run: echo ${{ github.event.inputs.test }}
     - name: Checkout
       uses: actions/checkout@v3
     - name: Setup node
