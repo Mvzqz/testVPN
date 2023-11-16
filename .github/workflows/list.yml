@@ -1,16 +1,20 @@
 name: Generate List Example
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      start-index:
+        description: 'Starting list index'
+        required: true
+        type: number
+      user-count:
+        description: 'number of users to create'
+        required: true
+        type: number
 
 jobs:
   generate_list:
     runs-on: ubuntu-latest
-
-    inputs:
-      n: 3
 
     steps:
       - name: Set up Node.js
@@ -24,7 +28,7 @@ jobs:
       - name: Generate List
         id: generate
         run: |
-          n=$INPUT_N
+          n=$INPUT_USER_COUNT
           list=()
           for ((i=1; i<=$n; i++)); do
             list+=("$i/$n")
