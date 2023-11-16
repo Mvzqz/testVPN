@@ -7,7 +7,7 @@ on:
         description: 'Starting list index'
         required: true
         type: number
-      user-count:
+      userCount:
         description: 'number of users to create'
         required: true
         type: number
@@ -28,7 +28,7 @@ jobs:
       - name: Generate List
         id: generate
         run: |
-          n=3
+          n=${{ github.event.inputs.userCount }}
           list=()
           for ((i=1; i<=$n; i++)); do
             list+=("$i/$n")
