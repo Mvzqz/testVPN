@@ -28,7 +28,7 @@ jobs:
       - name: Generate List
         id: generate
         run: |
-          n=$INPUT_USER_COUNT
+          n=3
           list=()
           for ((i=1; i<=$n; i++)); do
             list+=("$i/$n")
