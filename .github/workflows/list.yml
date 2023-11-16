@@ -1,0 +1,38 @@
+name: Generate List Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate_list:
+    runs-on: ubuntu-latest
+
+    inputs:
+      n: 3
+
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate List
+        id: generate
+        run: |
+          n=$INPUT_N
+          list=()
+          for ((i=1; i<=$n; i++)); do
+            list+=("$i/$n")
+          done
+          echo "Generated list: ${list[@]}"
+          echo "::set-output name=list::${list[@]}"
+
+      - name: Use the List
+        run: |
+          generatedList="${{ steps.generate.outputs.list }}"
+          echo "Generated list in the next step: $generatedList"
