@@ -1,0 +1,117 @@
+name: Generate List Example
+
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: 'Project/Environment to run tests on'
+        required: true
+        default: 'STAGING'
+        type: choice
+        options:
+          - 'STAGING'
+          - 'PROD'
+          - 'PLASMIC'
+          - 'DEVELOP'
+          - 'STAGING_BRAZIL'
+          - 'PROD_BRAZIL'
+      freeUsers:
+        description: 'Create Free users'
+        required: false
+        default: false
+        type: boolean
+      monthlyUsers:
+        description: 'Create Monthly users'
+        required: false
+        default: false
+        type: boolean
+      annualUsers:
+        description: 'Create Annual users'
+        required: false
+        default: false
+        type: boolean
+      startIndex:
+        description: 'Starting list index'
+        required: true
+        type: number
+      userCount:
+        description: 'number of users to create'
+        required: true
+        type: number
+
+jobs:
+  generate_parameters:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.set_matrix.outputs.matrix }}
+      tags: ${{ steps.set_tags.outputs.tags }}
+    steps:
+      - name: generate List
+        id: set_matrix
+        run: |
+          n=${{ github.event.inputs.userCount }}
+          list=()
+          for ((i=1; i<=$n; i++)); do
+            list+=("$i/$n")
+          done
+          echo "${list[@]} > matrix.txt"
+          echo "::set-output name=matrix::matrix.txt"
+      - name: create tags
+        id: set_tags
+        run:
+          free=${{ github.event.inputs.freeUsers }}
+          monthly=${{ github.event.inputs.monthlyUsers }}
+          annual=${{ github.event.inputs.annualUsers }}
+          list=()
+
+          if [[ $free == 'true' ]]; then
+            list+="free"
+          fi
+
+          if [[ $monthly == 'true' ]]; then
+            list+="monthly"
+          fi
+
+          if [[ $annual == 'true' ]]; then
+            list+="annual"
+          fi
+
+          echo "::set-output name=tags::$(IFS=\|; echo "${list[*]}")" 
+  test:
+    needs: generate_parameters
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{fromJson(needs.generate_parameters.outputs.matrix)}}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: create users
+        run: START_INDEX=${{ github.event.inputs.startIndex }} USERS_COUNT=${{ github.event.inputs.userCount }} TARGET=${{ github.event.inputs.project }} npx playwright test -g '${{needs.generate_parameters.outputs.tags}}'  --config './utils/create-users/create-users.config.ts' --project=${{ github.event.inputs.project }}
+      - name: Upload user file
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: all-user-files
+          path: utils/create-user/output
+          retention-days: 1
+
+
+
+    
