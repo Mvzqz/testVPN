@@ -38,6 +38,10 @@ jobs:
   use-list:
     needs: generate_list
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include: ${{fromJson(needs.generate_list.outputs.list)}}
+
     steps:
       - name: Use the List
         run: |
