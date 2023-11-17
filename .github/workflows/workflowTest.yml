@@ -92,7 +92,7 @@ jobs:
              fi
            done
           tags+="\""
-           
+          echo "tags=${tags}"
           echo "tags=${tags}" >> $GITHUB_OUTPUT
   test:
     needs: generate_parameters
@@ -108,11 +108,9 @@ jobs:
         shard: ${{fromJson(needs.generate_parameters.outputs.matrix)['matrix']}}
     steps:
       - name: print tags
-        run: echo "${{needs.generate_parameters.outputs.tags}}"
-      - name: print matrix 1
-        run: echo "${{needs.generate_parameters.outputs.matrix}}"
-      - name: print matrix 2
+        run: echo "TAGS ${{needs.generate_parameters.outputs.tags}}"
+      - name: print matrix
         run: echo "${{fromJson(needs.generate_parameters.outputs.matrix)['matrix']}}"
       - name: print shard
-        run: echo "${{matrix.shard}}"
+        run: echo "${{needs.generate_parameters.outputs.tags}} ${{matrix.shard}}"
 
