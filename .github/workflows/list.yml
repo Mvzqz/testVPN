@@ -35,7 +35,11 @@ jobs:
           done
           echo "list={\"list\":'[${list[@]}]'}"
           echo "list={\"list\":'[${list[@]}]'}" >> $GITHUB_OUTPUT
-          echo ${{ fromJSON(needs.generate_list.outputs.list)['list']}}
+      - name: print list
+        run:
+          echo ${{ fromJSON('{"list:[\"1\",\"2\"]"}')['list']}}
+          echo ${{ fromJSON(step.generate.outputs.list)['list']}}
+
 
   use-list:
     needs: generate_list
