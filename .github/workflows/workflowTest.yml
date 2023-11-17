@@ -64,18 +64,36 @@ jobs:
       - name: generate tags
         id: set_tags
         run: 
+          free="${{ github.event.inputs.freeUsers }}"
+          monthly="${{ github.event.inputs.monthlyUsers }}"
+          annual="${{ github.event.inputs.annualUsers }}"
           list=()
-          if [[ "${{ github.event.inputs.freeUsers }}" == "true" ]]; then
-          list+="free"
+          
+          if [[ $free == 'true' ]]; then
+          list+=("'free'")
           fi
-
-          if [[ "${{ github.event.inputs.monthlyUsers }}" == "true" ]]; then
-          list+="monthly"
+          
+          if [[ $monthly == 'true' ]]; then
+          list+=("'monthly'")
           fi
-
-          if [[ "${{ github.event.inputs.annualUsers }}" == "true" ]]; then
-          list+="annual"
+          
+          if [[ $annual == 'true' ]]; then
+          list+=("'annual'")
           fi
+          
+          tags="\""
+          array_length=${#list[@]}
+          
+          echo $array_length
+           for ((i=0; i<=$array_length; i++)); do
+              tags+="${list[i]}"
+             if [[ $i -lt  $((array_length-1)) ]]; then
+              tags+="|"
+             fi
+           done
+          tags+="\""
+           
+          echo "tags=${tags}"
           echo "tags=${list[@]}" >> $GITHUB_OUTPUT
   test:
     needs: generate_parameters
