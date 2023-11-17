@@ -34,7 +34,7 @@ jobs:
             list+=("\"$i/$n\",")
           done
           echo "list={\"list\":[${list[@]}]}"
-          echo list={\"list\":[${list[@]}]}" >> $GITHUB_OUTPUT
+          echo "list={\"list\":[${list[@]}]}" >> $GITHUB_OUTPUT
   use-list:
     needs: generate_list
     runs-on: ubuntu-latest
