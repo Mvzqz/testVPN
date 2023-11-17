@@ -47,7 +47,7 @@ jobs:
       matrix: ${{ steps.set_matrix.outputs.matrix }}
       tags: ${{ steps.set_tags.outputs.tags }}
     steps:
-      - name: generate List
+      - name: generate matrix
         id: set_matrix
         run: |
           matrix="{\"matrix\":["
@@ -60,7 +60,7 @@ jobs:
           matrix+="]}"
           echo list
           echo "matrix=${matrix}" >> $GITHUB_OUTPUT
-      - name: generate List
+      - name: generate tags
         id: set_tags
         run: echo "tags=2" >> $GITHUB_OUTPUT
   test:
