@@ -33,8 +33,9 @@ jobs:
           for ((i=1; i<=$n; i++)); do
             list+=("\"$i/$n\",")
           done
-          echo "Generated list: ${list[@]}"
-          echo "list::[${list[@]}]" >> $GITHUB_OUTPUT
+          json_list="[${list[@]}]"
+          echo json_list
+          echo "list::${json_list}" >> $GITHUB_OUTPUT
   use-list:
     needs: generate_list
     runs-on: ubuntu-latest
