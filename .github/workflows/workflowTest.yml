@@ -113,4 +113,14 @@ jobs:
         run: echo "${{fromJson(needs.generate_parameters.outputs.matrix)['matrix']}}"
       - name: print shard
         run: echo "${{needs.generate_parameters.outputs.tags}} ${{matrix.shard}}"
+      - name: test
+        run: npx playwright test test-2.spec.ts 
+      - name: Upload user file
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: all-user-files
+          path: utils/create-user/output
+          retention-days: 1
+
 
