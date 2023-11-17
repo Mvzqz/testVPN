@@ -55,8 +55,8 @@ jobs:
           for ((i=1; i<=$n; i++)); do
             list+=("\"$i/$n\",")
           done
-          echo "matrix={\"matrix\":'[${list[@]}]'}"
-          echo "matrix={\"matrix\":'[${list[@]}]'}" >> $GITHUB_OUTPUT
+          echo "matrix={\"matrix\":[${list[@]}]}"
+          echo "matrix={\"matrix\":[${list[@]}]}" >> $GITHUB_OUTPUT
       - name: generate List
         id: set_tags
         run: echo "tags=2" >> $GITHUB_OUTPUT
