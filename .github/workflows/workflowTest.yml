@@ -50,10 +50,11 @@ jobs:
       - name: generate matrix
         id: set_matrix
         run: |
+          n = ${{ github.event.inputs.userCount }}
           matrix="{\"matrix\":["
           for ((i=1; i<=n; i++)); do
             matrix+="\"$i/$n\""
-            if [[ $i -lt $((n)) ]]; then
+            if [[ $i -lt $n ]]; then
               matrix+=","
             fi
           done
