@@ -68,10 +68,6 @@ jobs:
           monthly=${{ github.event.inputs.monthlyUsers }}
           annual=${{ github.event.inputs.annualUsers }}
 
-          echo "$free"
-          echo "$monthly"  
-          echo "$annual"         
-
           list=()
           if [[ $free == 'true' ]]; then
             list+=("'free'")
@@ -97,8 +93,7 @@ jobs:
            done
           tags+="\""
            
-          echo "tags=${tags}"
-          echo "tags=${list[@]}" >> $GITHUB_OUTPUT
+          echo "tags=${tags}" >> $GITHUB_OUTPUT
   test:
     needs: generate_parameters
     runs-on: ubuntu-latest
