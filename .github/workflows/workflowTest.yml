@@ -56,7 +56,6 @@ jobs:
             list+=("\"$i/$n\"")
           done
           echo "tags::$(IFS=\,; echo ${list[*]})"
-          echo "matrix={\"matrix\":[${list[@]}]}"
           echo "matrix={\"matrix\":[${list[@]}]}" >> $GITHUB_OUTPUT
       - name: generate List
         id: set_tags
