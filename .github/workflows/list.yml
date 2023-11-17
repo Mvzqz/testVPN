@@ -34,7 +34,7 @@ jobs:
             list+=("$i/$n")
           done
           echo "Generated list: ${list[@]}"
-          echo "::set-output name=list::${list[@]}"
+          echo "name=list::${list[@]}" >> $GITHUB_OUTPUT
   use-list:
     needs: generate_list
     runs-on: ubuntu-latest
