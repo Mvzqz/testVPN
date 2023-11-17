@@ -44,5 +44,5 @@ jobs:
     steps:
       - name: Use the List
         run: |
-          generatedList="${{fromJson(needs.generate_list.outputs.list)[list]}}"
+          generatedList="${{needs.generate_list.outputs.list}}"
           echo "Generated list in the next step: $generatedList"
