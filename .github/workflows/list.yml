@@ -35,7 +35,9 @@ jobs:
           done
           echo "Generated list: ${list[@]}"
           echo "::set-output name=list::${list[@]}"
-
+  use-list:
+    runs-on: ubuntu-latest
+    steps:
       - name: Use the List
         run: |
           generatedList="${{ steps.generate.outputs.list }}"
