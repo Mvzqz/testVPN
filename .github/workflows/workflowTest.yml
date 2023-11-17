@@ -63,22 +63,22 @@ jobs:
           echo "matrix=${matrix}" >> $GITHUB_OUTPUT
       - name: generate tags
         id: set_tags
-        run: 
+        run: |
           free="${{ github.event.inputs.freeUsers }}"
           monthly="${{ github.event.inputs.monthlyUsers }}"
           annual="${{ github.event.inputs.annualUsers }}"
 
           list=()
           if [[ $free == 'true' ]]; then
-          list+=("'free'")
+            list+=("'free'")
           fi
           
           if [[ $monthly == 'true' ]]; then
-          list+=("'monthly'")
+            list+=("'monthly'")
           fi
           
           if [[ $annual == 'true' ]]; then
-          list+=("'annual'")
+            list+=("'annual'")
           fi
           
           tags="\""
