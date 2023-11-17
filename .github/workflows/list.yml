@@ -33,9 +33,10 @@ jobs:
           for ((i=1; i<=$n; i++)); do
             list+=("\"$i/$n\",")
           done
-          #echo "list={\"list\":'[${list[@]}]'}"
-          #echo "list={\"list\":'[${list[@]}]'}" >> $GITHUB_OUTPUT
-          echo "list={\"list\":'[\"1\",\"2\"]'}" >> $GITHUB_OUTPUT
+          echo "list={\"list\":'[${list[@]}]'}"
+          echo "list={\"list\":'[${list[@]}]'}" >> $GITHUB_OUTPUT
+          echo ${{ fromJSON(needs.generate_list.outputs.list)['list']}}
+
   use-list:
     needs: generate_list
     runs-on: ubuntu-latest
