@@ -33,7 +33,7 @@ jobs:
           for ((i=1; i<=$n; i++)); do
             list+=("\"$i/$n\",")
           done
-          json_list="{list:[${list[@]}]}"
+          json_list="{\"list\":[${list[@]}]}"
           echo json_list
           echo "list=\"${json_list}\"" >> $GITHUB_OUTPUT
   use-list:
