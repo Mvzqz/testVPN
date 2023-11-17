@@ -50,13 +50,16 @@ jobs:
       - name: generate List
         id: set_matrix
         run: |
-          n=${{ github.event.inputs.userCount }}
-          list=()
+          list="{\"matrix\":["
           for ((i=1; i<=$n; i++)); do
-            list+=("\"$i/$n\"")
+            list+="\"$i/$n\""
+            if [[ $i -lt $((n)) ]]; then
+              list+=","
+            fi
           done
-          echo "tags=$(IFS=\,; echo ${list[*]})"
-          echo "matrix={\"matrix\":[${list[@]}]}" >> $GITHUB_OUTPUT
+          list+="]}"
+          echo list
+          echo "matrix=list}" >> $GITHUB_OUTPUT
       - name: generate List
         id: set_tags
         run: echo "tags=2" >> $GITHUB_OUTPUT
