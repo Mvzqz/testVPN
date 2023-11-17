@@ -1,4 +1,4 @@
-name: Generate List Example
+name: list2
 
 on:
   workflow_dispatch:
