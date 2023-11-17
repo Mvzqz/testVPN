@@ -51,7 +51,7 @@ jobs:
         id: set_matrix
         run: |
           matrix="{\"matrix\":["
-          for ((i=1; i<=$n; i++)); do
+          for ((i=1; i<=n; i++)); do
             matrix+="\"$i/$n\""
             if [[ $i -lt $((n)) ]]; then
               matrix+=","
