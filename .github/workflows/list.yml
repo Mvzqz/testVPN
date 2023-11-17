@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        shard: ${{ fromJSON(needs.generate_list.outputs.list)["list"]}}
+        shard: ${{ fromJSON(needs.generate_list.outputs.list)['list']}}
 
     steps:
       - name: Use the List
