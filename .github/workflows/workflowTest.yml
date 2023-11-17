@@ -68,6 +68,10 @@ jobs:
           monthly=${{ github.event.inputs.monthlyUsers }}
           annual=${{ github.event.inputs.annualUsers }}
 
+          echo "$free"
+          echo "$monthly"  
+          echo "$annual"         
+
           list=()
           if [[ $free == 'true' ]]; then
             list+=("'free'")
