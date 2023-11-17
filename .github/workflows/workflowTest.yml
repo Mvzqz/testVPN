@@ -57,24 +57,7 @@ jobs:
           done
           echo "list={\"matrix\":'[${list[@]}]'}"
           echo "list={\"matrix\":'[${list[@]}]'}" >> $GITHUB_OUTPUT
-      - name: create tags
-        id: set_tags
-        run:
-          list=()
 
-          if [[ "${{ github.event.inputs.freeUsers }}" == "true" ]]; then
-            list+="free"
-          fi
-
-          if [[ "${{ github.event.inputs.monthlyUsers }}" == "true" ]]; then
-            list+="monthly"
-          fi
-
-          if [[ "${{ github.event.inputs.annualUsers }}" == "true" ]]; then
-            list+="annual"
-          fi
-
-          echo "::set-output name=tags::$(IFS=\|; echo "${list[*]}")" 
   test:
     needs: generate_parameters
     runs-on: ubuntu-latest
@@ -89,8 +72,7 @@ jobs:
         shart: ${{fromJson(needs.generate_parameters.outputs.matrix)}}
 
     steps:
-      - name: print tags
-        run: echo "${{ needs.generate_parameters.outputs.tags}}"
+
       - name: print matrix
         run: echo "${{ matrix.shard }}"
 
