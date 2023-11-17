@@ -1,0 +1,45 @@
+name: Generate List Example
+
+on:
+  workflow_dispatch:
+    inputs:
+      start-index:
+        description: 'Starting list index'
+        required: true
+        type: number
+      userCount:
+        description: 'number of users to create'
+        required: true
+        type: number
+
+jobs:
+  generate_list:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate List
+        run: |
+          n=${{ github.event.inputs.userCount }}
+          list=()
+          for ((i=1; i<=$n; i++)); do
+            list+=("$i/$n")
+          done
+          echo "${list[@]}" > generated_list.txt
+
+  use-list:
+    needs: generate_list
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Use the List
+        run: |
+          generatedList=$(cat generated_list.txt)
+          echo "Generated list: $generatedList"
