@@ -50,16 +50,16 @@ jobs:
       - name: generate List
         id: set_matrix
         run: |
-          list="{\"matrix\":["
+          matrix="{\"matrix\":["
           for ((i=1; i<=$n; i++)); do
-            list+="\"$i/$n\""
+            matrix+="\"$i/$n\""
             if [[ $i -lt $((n)) ]]; then
-              list+=","
+              matrix+=","
             fi
           done
-          list+="]}"
+          matrix+="]}"
           echo list
-          echo "matrix=list}" >> $GITHUB_OUTPUT
+          echo "matrix=${matrix}" >> $GITHUB_OUTPUT
       - name: generate List
         id: set_tags
         run: echo "tags=2" >> $GITHUB_OUTPUT
