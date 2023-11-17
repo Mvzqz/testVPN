@@ -68,7 +68,10 @@ jobs:
       pages: write
       id-token: write
     timeout-minutes: 30
-
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{fromJson(needs.generate_parameters.outputs.matrix)['matrix']}}
     steps:
       - name: print tags
         run: echo "${{needs.generate_parameters.outputs.tags}}"
@@ -76,4 +79,6 @@ jobs:
         run: echo "${{needs.generate_parameters.outputs.matrix}}"
       - name: print matrix 2
         run: echo "${{fromJson(needs.generate_parameters.outputs.matrix)['matrix']}}"
+      - name: print shard
+        run: echo "${{matrix.shard}}"
 
