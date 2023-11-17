@@ -35,7 +35,7 @@ jobs:
           done
           json_list="[${list[@]}]"
           echo json_list
-          echo "list::${json_list}" >> $GITHUB_OUTPUT
+          echo "list::\"${json_list}\"" >> $GITHUB_OUTPUT
   use-list:
     needs: generate_list
     runs-on: ubuntu-latest
