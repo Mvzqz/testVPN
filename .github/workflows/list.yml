@@ -33,15 +33,13 @@ jobs:
           for ((i=1; i<=$n; i++)); do
             list+=("\"$i/$n\",")
           done
-          json_list="{\"list\":[${list[@]}]}"
-          echo json_list
-          echo "list=\"${json_list}\"" >> $GITHUB_OUTPUT
+          echo "list=list" >> $GITHUB_OUTPUT
   use-list:
     needs: generate_list
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        shard: ${{fromJson(needs.generate_list.outputs.list)}}
+        shard: ${{needs.generate_list.outputs.list}}
 
     steps:
       - name: Use the List
