@@ -1,0 +1,55 @@
+name: Playwright On-Demand Regression
+
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: 'Project/Environment to run tests on'
+        required: true
+        default: 'STAGING'
+        type: choice
+        options:
+          - 'STAGING'
+          - 'PROD'
+          - 'PLASMIC'
+          - 'DEVELOP'
+          - 'STAGING_BRAZIL'
+          - 'PROD_BRAZIL'
+      suite:
+        description: 'Test suite to run Commercial/Rails'
+        required: true
+        default: 'COMMERCIAL'
+        type: choice
+        options:
+          - 'COMMERCIAL'
+          - 'RAILS'
+      upload-to-testmo:
+        description: 'Upload report to Tesmo'
+        required: false
+        default: true
+        type: boolean
+      upload-to-github-pages:
+        description: 'Publish report to GitHub Pages'
+        required: false
+        default: true
+        type: boolean
+env:
+  WORKERS: 2
+  RETRIES: 1
+  TRACE: 'off'
+jobs:
+  generate_parameters:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      grep: ${{ steps.set_grep.outputs.grep }}
+    steps:
+      - name: generate grep
+        id: set_grep
+        run: |
+          echo "Starting..." 
+          suite=${{ fromJSON('{ "COMMERCIAL":"⚛️", "RAILS":"🛤️" }')[github.event.inputs.suite] }}  
+          env=${{ fromJSON('{"PROD":"🏭","PROD_BRAZIL":"🏭","STAGING":"🎭","PLASMIC":"🎭","DEVELOP":"🎭","STAGING_BRAZIL:"🎭"}')[github.event.inputs.project] }}
+
+          echo "grep=${suite}${env}|${suite}🌐" 
+          echo "grep=${suite}${env}|${suite}🌐"  >> $GITHUB_OUTPUT
