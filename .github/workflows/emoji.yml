@@ -49,7 +49,7 @@ jobs:
         run: |
           echo "Starting..." 
           suite=${{ fromJSON('{ "COMMERCIAL":"1", "RAILS":"🛤️" }')[github.event.inputs.suite] }}  
-          env=${{ fromJSON('{"PROD":"a","PROD_BRAZIL":"b","STAGING":"🎭","STAGING_BRAZIL":"🎭","PLASMIC":"🎭","DEVELOP":"🎭"}')[github.event.inputs.project] }}
+          env=${{ fromJSON('{"PROD":"🏭","PROD_BRAZIL":"🏭","STAGING":"🎭","STAGING_BRAZIL":"🎭","PLASMIC":"🎭","DEVELOP":"🎭"}')[github.event.inputs.project] }}
 
           echo "grep=${suite}${env}|${suite}🌐" 
           echo "grep=${suite}${env}|${suite}🌐"  >> $GITHUB_OUTPUT
