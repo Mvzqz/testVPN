@@ -51,5 +51,5 @@ jobs:
           suite=${{ fromJSON('{ "COMMERCIAL":"1", "RAILS":"2" }')[github.event.inputs.suite] }}  
           env=${{ fromJSON('{"PROD":"a","PROD_BRAZIL":"b","STAGING":"c","PLASMIC":"d","DEVELOP":"e","STAGING_BRAZIL":"f"}')[github.event.inputs.project] }}
 
-          echo "grep=${suite}${env}|${suite}g" 
-          echo "grep=${suite}${env}|${suite}g"  >> $GITHUB_OUTPUT
+          echo "grep=${suite}${env}|${suite}🌐" 
+          echo "grep=${suite}${env}|${suite}🌐"  >> $GITHUB_OUTPUT
