@@ -48,7 +48,7 @@ jobs:
         id: set_grep
         run: |
           echo "Starting..." 
-          suite=${{ fromJSON('{ "COMMERCIAL":"🚀", "RAILS":"🛤️" }')[github.event.inputs.suite] }}  
+          suite=${{ fromJSON('{ "COMMERCIAL":"⚛️", "RAILS":"🛤️" }')[github.event.inputs.suite] }}  
           env=${{ fromJSON('{"PROD":"🏭","PROD_BRAZIL":"🏭","STAGING":"🎭","STAGING_BRAZIL":"🎭","PLASMIC":"🎭","DEVELOP":"🎭"}')[github.event.inputs.project] }}
 
           echo "grep=${suite}${env}|${suite}🌐" 
