@@ -108,6 +108,8 @@ jobs:
             grep="${suite_icon}${env_icon}|${suite_icon}🌐" 
           fi
 
+          echo "geo_grep=${geo_grep}" 
+          echo "geo_grep=${geo_grep}" >> $GITHUB_OUTPUT
           echo "grep=${grep}" 
           echo "grep=${grep}" >> $GITHUB_OUTPUT
           echo "grep_invert=${grep_invert}" 
