@@ -1,0 +1,105 @@
+name: Execution
+
+on:
+  workflow_call:
+    inputs:
+      project:
+        description: 'Project to run tests on'
+        required: true
+        default: 'STAGING'
+        type: string
+      suite:
+        description: 'Suite to run'
+        required: true
+        type: string
+        default: 'CUSTOM'
+      shards:
+        description: 'Number of shard to run Parallel test'
+        required: false
+        default: '1'
+        type: string
+      specs:
+        description: 'Specs to run'
+        required: false
+        type: string
+        default: '*'
+      grep:
+        description: 'Tags to run'
+        required: false
+        type: string
+        default: '.*'
+      retries:
+        description: 'Number of retries'
+        required: false
+        default: '1'
+        type: string
+      trace:
+        description: 'Enable trace logs'
+        required: true
+        type: string
+        default: 'off'
+      run_serial_test:
+        description: 'Indicate if some test need to be run serialy'
+        required: false
+        default: false
+        type: boolean
+      use_vpn:
+        description: 'Indicate if vpn will be used'
+        required: false
+        default: false
+        type: boolean
+      vpn_country:
+        description: 'the country of the locaton of the VPN'
+        required: false
+        default: 'Off'
+        type: string
+jobs:
+  generate_parameters:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      shardIndex: ${{ steps.set_indexes.outputs.shardIndex }}
+      shardsTotal: ${{ steps.set_indexes.outputs.shardsTotal }}
+      grep: ${{ steps.set_grep.outputs.grep }}
+      grep_invert: ${{ steps.set_grep.outputs.grep_invert }}
+      vpn_config_json: ${{ steps.get_vpn_json.outputs.vpn_config_json }}
+    steps:
+      - name: generate indexes
+        id: set_indexes
+        run: |
+          shardsTotal=${{ inputs.shards }}
+
+          indexes="{\"shardIndex\":["
+          for ((i=1; i<=shardsTotal; i++)); do
+            indexes+="$i"
+            if [[ $i -lt $shardsTotal ]]; then
+              indexes+=","
+            fi
+          done
+          indexes+="]}"
+
+          echo "shardIndex=${indexes}" 
+          echo "shardIndex=${indexes}" >> $GITHUB_OUTPUT
+          echo "shardsTotal={\"shardsTotal\":[${shardsTotal}]}" 
+          echo "shardsTotal={\"shardsTotal\":[${shardsTotal}]}"  >> $GITHUB_OUTPUT
+      - name: generate grep
+        id: set_grep
+        run: |
+          suite="${{inputs.suite}}"
+          grep="${{inputs.grep}}"
+
+          if [[ $suite == 'CUSTOM' ]]; then
+            grep_invert=""
+          fi
+
+          if [[ $suite != 'CUSTOM' ]]; then
+            suite_icon=${{ fromJSON('{ "COMMERCIAL":"⚛️", "RAILS":"🛤️" }')[inputs.suite] }}  
+            env_icon=${{ fromJSON('{"PROD":"🏭","PROD_BRAZIL":"🏭","STAGING":"🎭","STAGING_BRAZIL":"🎭","PLASMIC":"🎭","DEVELOP":"🎭"}')[inputs.project] }}
+            grep_invert="${{ fromJSON('{ "true":"--grep-invert 1️⃣", "false":"" }')[inputs.run_serial_test] }}"
+            grep="${suite_icon}${env_icon}|${suite_icon}🌐" 
+          fi
+
+          echo "grep=${grep}" 
+          echo "grep=${grep}" >> $GITHUB_OUTPUT
+          echo "grep_invert=${grep_invert}" 
+          echo "grep_invert=${grep_invert}"  >> $GITHUB_OUTPUT
