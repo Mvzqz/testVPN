@@ -104,8 +104,8 @@ jobs:
           echo "grep_invert=${grep_invert}" 
           echo "grep_invert=${grep_invert}"  >> $GITHUB_OUTPUT
       - name: Run Serial Playwright tests
-        run: echo "SHARD_INDEX=${{ matrix.shardIndex }} SHARD_TOTAL=${{ matrix.shardTotal }} npx playwright test ${{ inputs.specs }} --project=${{ inputs.project }}  --retries=${{ inputs.retries }} --trace=${{ inputs.trace }} --workers=1 --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --grep (?=.*${{ needs.generate_parameters.outputs.grep }})(?=.*1️⃣)"
+        run: SHARD_INDEX=${{ matrix.shardIndex }} SHARD_TOTAL=${{ matrix.shardTotal }} npx playwright test ${{ inputs.specs }} --project=${{ inputs.project }}  --retries=${{ inputs.retries }} --trace=${{ inputs.trace }} --workers=1 --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --grep (?=.*${{ needs.generate_parameters.outputs.grep }})(?=.*1️⃣)
       - name: Run Parallel Playwright tests
-        run: echo "USE_VPN=${{ inputs.use_vpn }} IP_COUNTRY=${{ inputs.vpn_country }} SHARD_INDEX=${{ matrix.shardIndex }} SHARD_TOTAL=${{ matrix.shardTotal }} npx playwright test ${{ inputs.specs }} --project=${{ inputs.project }}  --retries=${{ inputs.retries }} --trace=${{ inputs.trace }} --workers=1 --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --grep ${{ needs.generate_parameters.outputs.grep }} ${{ needs.generate_parameters.outputs.grep_invert }}"
+        run: USE_VPN=${{ inputs.use_vpn }} IP_COUNTRY=${{ inputs.vpn_country }} SHARD_INDEX=${{ matrix.shardIndex }} SHARD_TOTAL=${{ matrix.shardTotal }} npx playwright test ${{ inputs.specs }} --project=${{ inputs.project }}  --retries=${{ inputs.retries }} --trace=${{ inputs.trace }} --workers=1 --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --grep ${{ needs.generate_parameters.outputs.grep }} ${{ needs.generate_parameters.outputs.grep_invert }}
 
 
