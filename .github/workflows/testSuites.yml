@@ -1,7 +1,7 @@
 name: Execution
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       project:
         description: 'Project to run tests on'
