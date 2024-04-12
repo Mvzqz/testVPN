@@ -100,6 +100,7 @@ jobs:
                 suite_icon="⚛"
               else
                 suite_icon="📍"
+                geo_grep="(?=.*$suite)"
               fi
             fi
             env_icon=${{ fromJSON('{"PROD":"🏭","PROD_BRAZIL":"🏭","STAGING":"🎭","STAGING_BRAZIL":"🎭","PLASMIC":"🎭","DEVELOP":"🎭"}')[inputs.project] }}
