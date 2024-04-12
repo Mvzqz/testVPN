@@ -93,7 +93,15 @@ jobs:
           fi
 
           if [[ $suite != 'CUSTOM' ]]; then
-            suite_icon=${{ fromJSON('{ "COMMERCIAL":"⚛️", "RAILS":"🛤️" }')[inputs.suite] }}  
+            if [[ $suite == 'RAILS' ]]; then
+              suite_icon="🛤"
+            else
+              if [[ $suite == 'COMMERCIAL' ]]; then
+                suite_icon="⚛"
+              else
+                suite_icon="📍"
+              fi
+            fi
             env_icon=${{ fromJSON('{"PROD":"🏭","PROD_BRAZIL":"🏭","STAGING":"🎭","STAGING_BRAZIL":"🎭","PLASMIC":"🎭","DEVELOP":"🎭"}')[inputs.project] }}
             grep_invert="${{ fromJSON('{ "true":"--grep-invert 1️⃣", "false":"" }')[inputs.run_serial_test] }}"
             grep="${suite_icon}${env_icon}|${suite_icon}🌐" 
@@ -103,9 +111,4 @@ jobs:
           echo "grep=${grep}" >> $GITHUB_OUTPUT
           echo "grep_invert=${grep_invert}" 
           echo "grep_invert=${grep_invert}"  >> $GITHUB_OUTPUT
-      - name: Run Serial Playwright tests
-        run: SHARD_INDEX=${{ matrix.shardIndex }} SHARD_TOTAL=${{ matrix.shardTotal }} npx playwright test ${{ inputs.specs }} --project=${{ inputs.project }}  --retries=${{ inputs.retries }} --trace=${{ inputs.trace }} --workers=1 --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --grep (?=.*${{ needs.generate_parameters.outputs.grep }})(?=.*1️⃣)
-      - name: Run Parallel Playwright tests
-        run: USE_VPN=${{ inputs.use_vpn }} IP_COUNTRY=${{ inputs.vpn_country }} SHARD_INDEX=${{ matrix.shardIndex }} SHARD_TOTAL=${{ matrix.shardTotal }} npx playwright test ${{ inputs.specs }} --project=${{ inputs.project }}  --retries=${{ inputs.retries }} --trace=${{ inputs.trace }} --workers=1 --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --grep ${{ needs.generate_parameters.outputs.grep }} ${{ needs.generate_parameters.outputs.grep_invert }}
-
 
