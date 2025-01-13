@@ -34,4 +34,4 @@ jobs:
 
         - name: test
           id: test
-          run: echo -e "${{steps.generate-parameters.outputs.language}}\${{steps.generate-parameters.outputs.update_output}}"
+          run: echo -e "${{steps.generate-parameters.outputs.language}}\n${{steps.generate-parameters.outputs.update_output}}"
