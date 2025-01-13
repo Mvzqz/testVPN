@@ -1,0 +1,37 @@
+name: test params
+
+on:
+  workflow_dispatch:
+    inputs:
+      language:
+        description: 'Language to test'
+        required: true
+        default: 'en'
+        type: choice
+        options:
+          - 'en'
+          - 'es'
+          - 'fr'
+          - 'ptbr'
+      update-expected-output:
+        description: 'Update the expected output with the output from this run'
+        required: false
+        default: false
+        type: boolean
+jobs:
+  execute-test:
+      runs-on: ubuntu-latest
+      steps:
+        - name: generate parameters
+          id: generate-parameters
+          run: |
+            param_language=${{ fromJSON('{"en":1,"es":2,"fr":3,"ptbr":4}')[inputs.language] }}
+            param_output="${{ fromJSON('{ "true":2, "false":1}')[inputs.update-expected-output] }}"
+            echo "language=${param_language}" 
+            echo  "language=${param_language}" >> $GITHUB_OUTPUT
+            echo "update_output=${param_output}" 
+            echo  "update_output=${param_output}" >> $GITHUB_OUTPUT
+
+        - name: test
+          id: test
+          run: echo -e "${{steps.generate-parameters.outputs.language}}\${{steps.generate-parameters.outputs.update_output}}"
